@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        font-family: 'poppins',sans-serif;
+        box-sizing: border-box;
+    }
+    .card{
+        width: 90%;
+        max-width: 400px;
+        max-height: 490px;
+        background: #0A4D68;
+        color: #fff;
+        margin: 100px auto 0;
+        border-radius: 20px;
+        padding: 40px 35px;
+        text-align: center;
+    }
+    .search{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .search input{
+        border: 0;
+        outline: 0;
+        background: #ebfffc;
+        color: #555;
+        padding: 10px 25px;
+        height: 40px;
+        border-radius: 30px;
+        flex: 1;
+        margin-right: 12px;
+        font-size: 12px;
+    }
+    .search button{
+        border: 0;
+        outline: 0;
+        background: #ebfffc;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer; 
+    }
+    .search button img{
+         width: 12px;
+    }
+    .weather-icon{
+        width: 70px;
+    }
+    .weather h1{
+        font-size: 80px;
+        font-weight: 500;
+    }
+    .weather h2{
+        font-size: 45px;
+        font-weight: 250;
+        margin-top: -10px;
+    }
+    .weather h3{
+        font-size: 30px;
+        font-weight: 250;
+    }
+    .weather h4{
+        font-size: 20px;
+        font-weight: 250;
+        margin-top: -10px;
+    }
+    .weather h5{
+        font-size: 15px;
+        font-weight: 250;
+        margin-top: -10px;
+    }
+    .details{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        margin-top: 50px;
+    }
+    .col{
+        display: flex;
+        align-items: center;
+        text-align: left;
+    }
+    .col img{
+        width: 40px;
+        margin-right: 10px;
+    }
+    .humidity,.wind,.date{
+        font-size: 15px;
+        margin-top: -6px;
+    }
+    .weather{
+        display: none;
+    }
+    
+    .weather1{
+        border: 2px black;
+        border-radius: 5px;
+    }
+</style>    
+</head>
+<body onload="getlocation()" class="bg-dark">
+    
+    <div class="card">
+        <div class="search">
+            <input type="text"  placeholder="enter city name" spellcheck="false" id="cityInput inputContainer">
+            <button type="button"><img src="images/search.png"></button>
+            </div>        
+        <div class="weather">
+            <div class="pt-3"><p align="center" class="date"></div>  
+            <img src="images/rain.png" class="weather-icon text-white" height="80">
+            <h3 class="temp">22°C</h3>
+            <h5 class="feels-like">Feels like</h5>
+            <h5 class="descrip">Description</h5>
+            <h4 class="city">New York</h4>
+            <div class="details">
+            <div class="col">
+                <img src="images/humidity.png" width="90" height="80">
+                <div>
+                    <p class="humidity">50%</p>
+                    <p>Humidity</p>
+                </div>
+            </div>
+            <div class="col">
+                <img src="images/wind.png" width="80" height="80">
+                <div>
+                    <p class="wind">15 km/h</p>
+                    <p>WInd Speed</p>
+                </div>
+            </div>      
+            </div><br>
+           
+        </div>
+    </div>
+    <div id = "weatherContainer style:padding-top:1000px;">
+        <div id="iconsContainer"> 
+    <div class="container">
+        <div class="row gy-6">
+            <div class="col-sm-2">
+                  <div class="card">
+                    <div class="card-body">
+                        <div class = "icons">
+                            <p class="weather"></p> 
+                            <div id="day1">aaa</div>
+                            <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon1" width="80" height="80">
+                            <p class="minValues" id="day1Min">Loading...</p>
+                            <p class="maxValues" id="day1Max">Loading...</p>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class = "icons">
+                            <p class="weather"></p>
+                            <div id="day2">aaa</div>
+                    <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon2" width="80" height="80">      
+                            <p class="minValues" id="day2Min">Loading...</p>
+                            <p class="maxValues" id="day2Max">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class = "icons">
+                            <p class="weather"></p> 
+                            <div id="day3">aaa</div>
+                            <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon3" width="80" height="80">        
+                            <p class="minValues" id="day3Min">Loading...</p>
+                            <p class="maxValues" id="day3Max">Loading...</p>
+                        </div>
+                                          </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class = "icons">
+                            <p class="weather"></p> 
+                            <div id="day4">aaa</div>
+                    <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon4" width="80" height="80">
+                            <p class="minValues" id="day4Min">Loading...</p>
+                            <p class="maxValues" id="day4Max">Loading...</p>
+                        </div>
+                                            </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class = "icons">
+                            <p class="weather"></p> 
+                            <div id="day5">aaa</div>
+                            <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon5" width="80" height="80">        
+                            <p class="minValues" id="day5Min">Loading...</p>
+                            <p class="maxValues" id="day5Max">Loading...</p>
+                        </div>
+                                           </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class = "icons">
+                            <p class="weather"></p> 
+                            <div id="day6">aaa</div>
+                            <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon6" width="80" height="80">        
+                            <p class="minValues" id="day6Min">Loading...</p>
+                            <p class="maxValues" id="day6Max">Loading...</p>
+                        </div>
+                                           </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     </div>
+</body>
+<script src="script.js"></script>
+</html>
